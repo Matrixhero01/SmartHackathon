@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Challenge Details | SmartHack</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #030712;
+            --panel: rgba(8, 18, 38, 0.82);
+            --cyan: #00eaff;
+            --blue: #287bff;
+            --purple: #8b5cf6;
+            --green: #53ffad;
+            --red: #ff5577;
+            --text: #e8f4ff;
+            --muted: #8498b1;
+            --border: rgba(0, 234, 255, 0.18);
+        }
+
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(
+                    circle at 15% 20%,
+                    rgba(0, 234, 255, 0.08),
+                    transparent 28%
+                ),
+                radial-gradient(
+                    circle at 85% 70%,
+                    rgba(139, 92, 246, 0.08),
+                    transparent 30%
+                ),
+                var(--bg);
+
+            color: var(--text);
+            font-family: "Space Grotesk", sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* GRID */
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+
+            background-image:
+                linear-gradient(
+                    rgba(0,234,255,0.025) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(0,234,255,0.025) 1px,
+                    transparent 1px
+                );
+
+            background-size: 45px 45px;
+
+            pointer-events: none;
+            z-index: -2;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            height: 74px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 6%;
+
+            border-bottom: 1px solid var(--border);
+
+            background: rgba(3,7,18,0.78);
+
+            backdrop-filter: blur(18px);
+
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-family: "Orbitron", sans-serif;
+            font-size: 21px;
+            font-weight: 800;
+            letter-spacing: 2px;
+
+            color: white;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--cyan);
+
+            text-shadow:
+                0 0 14px rgba(0,234,255,0.7);
+        }
+
+        .back {
+            color: var(--cyan);
+            text-decoration: none;
+
+            border: 1px solid var(--border);
+
+            padding: 9px 15px;
+
+            border-radius: 6px;
+
+            font-size: 13px;
+
+            transition: 0.3s;
+        }
+
+        .back:hover {
+            background: rgba(0,234,255,0.08);
+
+            box-shadow:
+                0 0 20px rgba(0,234,255,0.15);
+        }
+
+        /* MAIN */
+
+        .container {
+            width: min(1100px, 90%);
+
+            margin: auto;
+
+            padding: 55px 0 80px;
+        }
+
+        /* TOP LABEL */
+
+        .eyebrow {
+            color: var(--cyan);
+
+            font-family: "Orbitron", sans-serif;
+
+            font-size: 10px;
+
+            letter-spacing: 4px;
+
+            margin-bottom: 18px;
+        }
+
+        /* HERO */
+
+        .hero {
+            position: relative;
+
+            padding: 35px;
+
+            border: 1px solid var(--border);
+
+            border-radius: 14px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(8,25,50,0.92),
+                    rgba(5,12,27,0.92)
+                );
+
+            overflow: hidden;
+
+            margin-bottom: 20px;
+        }
+
+        .hero::before {
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 2px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    var(--cyan),
+                    var(--purple),
+                    transparent
+                );
+        }
+
+        .hero::after {
+            content: "";
+
+            position: absolute;
+
+            width: 250px;
+            height: 250px;
+
+            right: -100px;
+            top: -100px;
+
+            border-radius: 50%;
+
+            background: rgba(0,234,255,0.07);
+
+            filter: blur(50px);
+        }
+
+        .category {
+            color: var(--cyan);
+
+            font-family: "Orbitron", sans-serif;
+
+            font-size: 11px;
+
+            letter-spacing: 3px;
+
+            margin-bottom: 12px;
+        }
+
+        .hero h1 {
+            font-family: "Orbitron", sans-serif;
+
+            font-size: clamp(30px,5vw,52px);
+
+            line-height: 1.15;
+
+            margin-bottom: 18px;
+        }
+
+        .hero-description {
+            max-width: 760px;
+
+            color: var(--muted);
+
+            line-height: 1.8;
+
+            font-size: 15px;
+        }
+
+        /* STATUS */
+
+        .status-row {
+            display: flex;
+
+            gap: 10px;
+
+            flex-wrap: wrap;
+
+            margin-top: 25px;
+        }
+
+        .badge {
+            padding: 8px 13px;
+
+            border-radius: 5px;
+
+            font-size: 10px;
+
+            letter-spacing: 1.5px;
+
+            font-weight: 600;
+        }
+
+        .open {
+            color: var(--green);
+
+            border: 1px solid rgba(83,255,173,0.3);
+
+            background: rgba(83,255,173,0.06);
+        }
+
+        .difficulty {
+            color: #ffc857;
+
+            border: 1px solid rgba(255,200,87,0.3);
+
+            background: rgba(255,200,87,0.05);
+        }
+
+        .teams {
+            color: var(--cyan);
+
+            border: 1px solid var(--border);
+
+            background: rgba(0,234,255,0.04);
+        }
+
+        /* CONTENT GRID */
+
+        .content-grid {
+            display: grid;
+
+            grid-template-columns: 1fr 310px;
+
+            gap: 20px;
+        }
+
+        /* PANEL */
+
+        .panel {
+            background: var(--panel);
+
+            border: 1px solid var(--border);
+
+            border-radius: 12px;
+
+            padding: 28px;
+
+            backdrop-filter: blur(12px);
+        }
+
+        .panel-title {
+            font-family: "Orbitron", sans-serif;
+
+            font-size: 13px;
+
+            letter-spacing: 2px;
+
+            margin-bottom: 20px;
+        }
+
+        .panel-title::before {
+            content: "//";
+
+            color: var(--cyan);
+
+            margin-right: 8px;
+        }
+
+        .description-text {
+            color: #9badc3;
+
+            line-height: 1.9;
+
+            font-size: 14px;
+        }
+
+        /* INFO */
+
+        .info-row {
+            display: flex;
+
+            justify-content: space-between;
+
+            padding: 14px 0;
+
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+
+            font-size: 13px;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            color: var(--muted);
+        }
+
+        .info-value {
+            color: white;
+
+            font-weight: 600;
+
+            text-align: right;
+        }
+
+        /* ACTION */
+
+        .action-panel {
+            position: sticky;
+
+            top: 95px;
+        }
+
+        .action-panel p {
+            color: var(--muted);
+
+            font-size: 13px;
+
+            line-height: 1.7;
+
+            margin-bottom: 25px;
+        }
+
+        .select-btn {
+            width: 100%;
+
+            padding: 15px;
+
+            border: 1px solid var(--cyan);
+
+            border-radius: 7px;
+
+            background: rgba(0,234,255,0.07);
+
+            color: var(--cyan);
+
+            font-family: "Orbitron", sans-serif;
+
+            font-size: 11px;
+
+            letter-spacing: 1.5px;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        .select-btn:hover {
+            background: var(--cyan);
+
+            color: #020812;
+
+            box-shadow:
+                0 0 30px rgba(0,234,255,0.35);
+        }
+
+        .select-btn:disabled {
+            opacity: 0.5;
+
+            cursor: not-allowed;
+        }
+
+        /* LOADING */
+
+        .loading {
+            text-align: center;
+
+            padding: 100px 20px;
+
+            color: var(--cyan);
+
+            font-family: "Orbitron", sans-serif;
+
+            letter-spacing: 2px;
+        }
+
+        .loader {
+            width: 38px;
+            height: 38px;
+
+            margin: 0 auto 20px;
+
+            border: 2px solid rgba(0,234,255,0.15);
+
+            border-top-color: var(--cyan);
+
+            border-radius: 50%;
+
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* ERROR */
+
+        .error {
+            text-align: center;
+
+            padding: 80px 20px;
+
+            color: var(--red);
+        }
+
+        /* RESPONSIVE */
+
+        @media(max-width: 800px) {
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .action-panel {
+                position: static;
+            }
+
+            .hero {
+                padding: 25px;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <a href="/dashboard" class="logo">
+            SMART<span>HACK</span>
+        </a>
+
+        <a href="/problems" class="back">
+            ← Challenges
+        </a>
+
+    </nav>
+
+
+    <!-- MAIN -->
+
+    <main class="container">
+
+        <div id="loading" class="loading">
+
+            <div class="loader"></div>
+
+            LOADING CHALLENGE...
+
+        </div>
+
+
+        <div id="error" class="error" style="display:none;">
+        </div>
+
+
+        <div id="content" style="display:none;">
+
+            <div class="eyebrow">
+                SMARTHACK // CHALLENGE DATABASE
+            </div>
+
+
+            <!-- HERO -->
+
+            <section class="hero">
+
+                <div
+                    class="category"
+                    id="category">
+                </div>
+
+                <h1 id="title"></h1>
+
+                <p
+                    class="hero-description"
+                    id="description">
+                </p>
+
+
+                <div class="status-row">
+
+                    <span
+                        class="badge open"
+                        id="status">
+                    </span>
+
+                    <span
+                        class="badge difficulty"
+                        id="difficulty">
+                    </span>
+
+                    <span
+                        class="badge teams"
+                        id="maxTeams">
+                    </span>
+
+                </div>
+
+            </section>
+
+
+            <!-- CONTENT -->
+
+            <div class="content-grid">
+
+
+                <!-- DESCRIPTION -->
+
+                <section class="panel">
+
+                    <div class="panel-title">
+                        CHALLENGE BRIEF
+                    </div>
+
+                    <p
+                        class="description-text"
+                        id="fullDescription">
+                    </p>
+
+                </section>
+
+
+                <!-- INFO -->
+
+                <aside class="panel action-panel">
+
+                    <div class="panel-title">
+                        CHALLENGE INFO
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span class="info-label">
+                            Challenge ID
+                        </span>
+
+                        <span
+                            class="info-value"
+                            id="problemId">
+                        </span>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span class="info-label">
+                            Category
+                        </span>
+
+                        <span
+                            class="info-value"
+                            id="infoCategory">
+                        </span>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span class="info-label">
+                            Difficulty
+                        </span>
+
+                        <span
+                            class="info-value"
+                            id="infoDifficulty">
+                        </span>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span class="info-label">
+                            Max Teams
+                        </span>
+
+                        <span
+                            class="info-value"
+                            id="infoTeams">
+                        </span>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span class="info-label">
+                            Status
+                        </span>
+
+                        <span
+                            class="info-value"
+                            id="infoStatus">
+                        </span>
+
+                    </div>
+
+
+                    <br>
+
+
+                    <p>
+                        Ready to turn this challenge into
+                        a working solution?
+                    </p>
+
+
+                    <button
+                        id="selectButton"
+                        class="select-btn"
+                        onclick="selectChallenge()">
+
+                        SELECT CHALLENGE →
+
+                    </button>
+
+                </aside>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <script>
+
+        // Flask passes the ID from the URL
+        const problemId = "{{ problem_id }}";
+
+
+        // ======================================
+        // LOAD CHALLENGE
+        // ======================================
+
+        async function loadProblem() {
+
+            try {
+
+                const response =
+                    await fetch(
+                        `/api/problems/${problemId}`
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (!response.ok || !data.success) {
+
+                    throw new Error(
+                        data.message ||
+                        "Challenge not found"
+                    );
+
+                }
+
+
+                const problem =
+                    data.problem;
+
+
+                // Hero
+
+                document.getElementById("category")
+                    .textContent =
+                    problem.category;
+
+
+                document.getElementById("title")
+                    .textContent =
+                    problem.title;
+
+
+                document.getElementById("description")
+                    .textContent =
+                    problem.description;
+
+
+                document.getElementById("fullDescription")
+                    .textContent =
+                    problem.description;
+
+
+                // Badges
+
+                document.getElementById("status")
+                    .textContent =
+                    problem.status;
+
+
+                document.getElementById("difficulty")
+                    .textContent =
+                    problem.difficulty;
+
+
+                document.getElementById("maxTeams")
+                    .textContent =
+                    `◈ ${problem.max_teams} MAX TEAMS`;
+
+
+                // Info
+
+                document.getElementById("problemId")
+                    .textContent =
+                    "#" +
+                    String(problem.problem_id)
+                        .padStart(3, "0");
+
+
+                document.getElementById("infoCategory")
+                    .textContent =
+                    problem.category;
+
+
+                document.getElementById("infoDifficulty")
+                    .textContent =
+                    problem.difficulty;
+
+
+                document.getElementById("infoTeams")
+                    .textContent =
+                    problem.max_teams;
+
+
+                document.getElementById("infoStatus")
+                    .textContent =
+                    problem.status;
+
+
+                // Show page
+
+                document.getElementById("loading")
+                    .style.display = "none";
+
+
+                document.getElementById("content")
+                    .style.display = "block";
+
+            }
+
+            catch(error) {
+
+                console.error(error);
+
+
+                document.getElementById("loading")
+                    .style.display = "none";
+
+
+                const errorBox =
+                    document.getElementById("error");
+
+
+                errorBox.style.display = "block";
+
+
+                errorBox.innerHTML = `
+                    <h2>
+                        CHALLENGE NOT FOUND
+                    </h2>
+
+                    <p style="margin-top:10px;">
+                        ${error.message}
+                    </p>
+
+                    <br>
+
+                    <a
+                        href="/problems"
+                        style="
+                            color:#00eaff;
+                            text-decoration:none;
+                        ">
+                        ← Return to Challenges
+                    </a>
+                `;
+
+            }
+
+        }
+
+
+        // ======================================
+        // SELECT CHALLENGE
+        // ======================================
+
+        function selectChallenge() {
+
+            /*
+                Team functionality will be connected
+                here after we build the Team module.
+            */
+
+            alert(
+                "Challenge selected! Team workflow coming next."
+            );
+
+        }
+
+
+        // ======================================
+        // START
+        // ======================================
+
+        loadProblem();
+
+    </script>
+
+</body>
+</html>

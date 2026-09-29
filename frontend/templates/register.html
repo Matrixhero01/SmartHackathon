@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Register | SmartHack</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #eef2ff, #ffffff);
+            display: flex;
+            flex-direction: column;
+        }
+
+        nav {
+            height: 70px;
+            background: #111827;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 8%;
+        }
+
+        .logo {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: #6366f1;
+        }
+
+        nav a {
+            color: #d1d5db;
+            text-decoration: none;
+        }
+
+        .container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .register-card {
+            width: 100%;
+            max-width: 480px;
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .register-card h1 {
+            text-align: center;
+            color: #111827;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #6b7280;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #374151;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: #6366f1;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+
+        button:hover {
+            background: #4f46e5;
+        }
+
+        button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .message {
+            display: none;
+            margin-bottom: 20px;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .success {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 25px;
+            color: #6b7280;
+        }
+
+        .login-link a {
+            color: #6366f1;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer {
+            background: #111827;
+            color: #9ca3af;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<nav>
+    <a href="/" class="logo">
+        Smart<span>Hack</span>
+    </a>
+
+    <a href="/login">Already have an account?</a>
+</nav>
+
+<div class="container">
+
+    <div class="register-card">
+
+        <h1>Create Account</h1>
+
+        <p class="subtitle">
+            Join SmartHack and start building
+        </p>
+
+        <div id="message" class="message"></div>
+
+        <form id="registerForm">
+
+            <div class="form-group">
+                <label for="full_name">Full Name</label>
+
+                <input
+                    type="text"
+                    id="full_name"
+                    placeholder="Enter your full name"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Enter your email"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone</label>
+
+                <input
+                    type="tel"
+                    id="phone"
+                    placeholder="Enter your phone number"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Create a password"
+                    required
+                    minlength="6"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="confirm_password">Confirm Password</label>
+
+                <input
+                    type="password"
+                    id="confirm_password"
+                    placeholder="Confirm your password"
+                    required
+                    minlength="6"
+                >
+            </div>
+
+            <button type="submit" id="registerButton">
+                Create Account
+            </button>
+
+        </form>
+
+        <div class="login-link">
+            Already have an account?
+            <a href="/login">Login here</a>
+        </div>
+
+    </div>
+
+</div>
+
+<footer>
+    © 2026 SmartHack — Hackathon Management System
+</footer>
+
+<script>
+
+const registerForm = document.getElementById("registerForm");
+const message = document.getElementById("message");
+const registerButton = document.getElementById("registerButton");
+
+registerForm.addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    const fullName =
+        document.getElementById("full_name").value.trim();
+
+    const email =
+        document.getElementById("email").value.trim();
+
+    const phone =
+        document.getElementById("phone").value.trim();
+
+    const password =
+        document.getElementById("password").value;
+
+    const confirmPassword =
+        document.getElementById("confirm_password").value;
+
+    message.style.display = "none";
+
+    // Check passwords before sending request
+    if (password !== confirmPassword) {
+
+        message.className = "message error";
+        message.textContent = "Passwords do not match.";
+        message.style.display = "block";
+
+        return;
+    }
+
+    registerButton.disabled = true;
+    registerButton.textContent = "Creating Account...";
+
+    try {
+
+        const response = await fetch("/api/auth/register", {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+
+                full_name: fullName,
+                email: email,
+                phone: phone,
+                password: password
+
+            })
+
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+
+            message.className = "message success";
+
+            message.textContent =
+                data.message || "Registration successful!";
+
+            message.style.display = "block";
+
+            registerForm.reset();
+
+            setTimeout(() => {
+                window.location.href = "/login";
+            }, 1200);
+
+        } else {
+
+            message.className = "message error";
+
+            message.textContent =
+                data.message || "Registration failed.";
+
+            message.style.display = "block";
+        }
+
+    } catch (error) {
+
+        console.error(error);
+
+        message.className = "message error";
+
+        message.textContent =
+            "Unable to connect to the server.";
+
+        message.style.display = "block";
+
+    } finally {
+
+        registerButton.disabled = false;
+        registerButton.textContent = "Create Account";
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>
